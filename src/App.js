@@ -27,7 +27,7 @@ function App() {
     setcountries(value);
 
     const filtered = countryList.filter((country) =>
-      country.common.toLowerCase().startsWith(value));
+      country.common.toLowerCase().includes(value));
 
     setfilteredCountryList(filtered);
   }
