@@ -1,4 +1,4 @@
-import styles from './Card.module.css';
+import  './Card.css';
 
 function Card({ country }) {
 
@@ -6,9 +6,9 @@ function Card({ country }) {
     const image = country.png;
 
     return (
-        <div className={styles.countryCard}>
-            <img src={image} alt={name} className={styles.flagImage} />
-            <h3>{name}</h3>
+        <div className="countryCard">
+            <img src={image} alt={name} className="flagImage" />
+            <h2>{name}</h2>
         </div>
     )
 }
