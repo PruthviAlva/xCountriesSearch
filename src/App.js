@@ -1,23 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
 
+import React, { useEffect, useState } from "react";
+
+import Card from './component/Card';
+
 function App() {
+
+  const URL = 'https://countries-search-data-prod-812920491762.asia-south1.run.app/countries';
+
+  const [countryList, setcountryList] = useState([]);
+  const [filteredCountryList, setfilteredCountryList] = useState([]);
+  const [countries, setcountries] = useState('');
+
+  useEffect(() => {
+    fetch(URL)
+      .then(response => response.json())
+      .then(data => {
+        setcountryList(data)
+        setfilteredCountryList(data)
+      }).catch(error => console.error("Error fetching data: ", error));
+  }, []);
+
+  const handleSearch = (e) => {
+
+    const value = e.target.value.toLowerCase();
+    setcountries(value);
+
+    const filtered = countryList.filter((country) =>
+      country.common.toLowerCase().startsWith(value));
+
+    setfilteredCountryList(filtered);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input type='text' value={countries} onChange={handleSearch} placeholder='Search for Countries' />
+      <div className='countriesList'>
+        {filteredCountryList.map(country => <Card country={country} />)}
+      </div>
     </div>
   );
 }
